@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "omZ2vTDSM2/rFRbF80AMKHWMB5Z67UCBA4kk9J4BnKs=",
+  "Source": "NativeBackendApp",
+  "BasePath": "_content/NativeBackendApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
