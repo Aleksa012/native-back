@@ -14,7 +14,9 @@ public class User
 
     public bool IsVerified { get; set; } = false;
 
-    public Guid[] Posts { get; set; } = Array.Empty<Guid>();
+    public List<Post> Posts { get; set; } = new List<Post>();
 
-    public Guid[] Comments { get; set; } = Array.Empty<Guid>();
+    public List<Comment> Comments { get; set; } = new List<Comment>();
+
+    public List<CommentReply> CommentReplies { get; set; } = new List<CommentReply>();
 }
