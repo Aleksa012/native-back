@@ -8,7 +8,7 @@ public class Post
 
     public DateTime CreatedAt { get; set; }
     
-    public DateTime EditedAt { get; set; }
+    public DateTime? EditedAt { get; set; }
 
     [Required] [MaxLength(200)] public string Content { get; set; } = string.Empty;
 
@@ -21,5 +21,20 @@ public class Post
     public bool IsPopular { get; set; } = false;
     
     [Required]
-    public User Author { get; set; }
+    public User? Author { get; set; }
+
+#pragma warning disable CS8618
+    public Post()
+#pragma warning restore CS8618
+    {
+        
+    }
+
+#pragma warning disable CS8618
+    public Post(User author)
+#pragma warning restore CS8618
+    {
+        Author = author;
+    }
+    
 }

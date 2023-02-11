@@ -1,6 +1,6 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeBackendApp", "NativeBackendApp.csproj", "{529D7B6D-6345-4E62-AF5A-CAF899D33978}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeBackendApp", "NativeBackend.csproj", "{529D7B6D-6345-4E62-AF5A-CAF899D33978}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

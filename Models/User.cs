@@ -14,9 +14,4 @@ public class User
 
     public bool IsVerified { get; set; } = false;
 
-    public List<Post> Posts { get; set; } = new List<Post>();
-
-    public List<Comment> Comments { get; set; } = new List<Comment>();
-
-    public List<CommentReply> CommentReplies { get; set; } = new List<CommentReply>();
 }

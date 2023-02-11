@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NativeBackendApp.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NativeBackendApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230211095402_AlterPostModel")]
+    partial class AlterPostModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,7 +164,7 @@ namespace NativeBackendApp.Migrations
             modelBuilder.Entity("NativeBackendApp.Models.Comment", b =>
                 {
                     b.HasOne("NativeBackendApp.Models.User", "Author")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -176,7 +179,7 @@ namespace NativeBackendApp.Migrations
             modelBuilder.Entity("NativeBackendApp.Models.CommentReply", b =>
                 {
                     b.HasOne("NativeBackendApp.Models.User", "Author")
-                        .WithMany()
+                        .WithMany("CommentReplies")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -191,7 +194,7 @@ namespace NativeBackendApp.Migrations
             modelBuilder.Entity("NativeBackendApp.Models.Post", b =>
                 {
                     b.HasOne("NativeBackendApp.Models.User", "Author")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -207,6 +210,15 @@ namespace NativeBackendApp.Migrations
             modelBuilder.Entity("NativeBackendApp.Models.Post", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("NativeBackendApp.Models.User", b =>
+                {
+                    b.Navigation("CommentReplies");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }
