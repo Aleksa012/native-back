@@ -1,3 +1,5 @@
+using System.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NativeBackend.Services;
 using NativeBackendApp.Data;
@@ -5,6 +7,7 @@ using NativeBackendApp.DTO;
 using NativeBackendApp.Models;
 using NativeBackendApp.ResponseModels;
 using NativeBackendApp.Util;
+using Microsoft.EntityFrameworkCore;
 
 namespace NativeBackendApp.Controllers;
 
@@ -21,11 +24,12 @@ public class UsersController: ControllerBase
         _auth = auth;
     }
     
+    [Authorize]
     [HttpGet]
     public ActionResult<IEnumerable<UserResponse>> GetAll()
     {
         return Ok(_context.Users.Select(user =>
-                new UserResponse(user , _context.Posts.Where(post => post.Author.Id == user.Id).ToList())
+                new UserResponse(user , _context.Posts.Where(post => post.Author.Id == user.Id).ToList())       
         ));
     }
 
@@ -43,6 +47,11 @@ public class UsersController: ControllerBase
         }
 
         User user = new User();
+
+        if (userDto.Email != null)
+        {
+            user.IsVerified = true;
+        }
 
         byte[] passwordHash;
         byte[] passwordSalt;
@@ -79,5 +88,20 @@ public class UsersController: ControllerBase
         }
 
         return Ok(_auth.GetToken(logedInUser));
+    }
+
+    [Authorize]
+    [HttpDelete]
+    public async Task<ActionResult> DeleteUser()
+    {
+        var token = HttpContext.User;
+        
+        var user = _context.Users.Single(user => user.Id.ToString() == token.FindFirst("Id")!.Value);
+
+        _context.Users.Remove(user);
+
+        await _context.SaveChangesAsync();
+
+        return Ok();
     }
 }

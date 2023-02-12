@@ -8,7 +8,7 @@ public class Comment
     
     public DateTime CreatedAt { get; set; }
     
-    public DateTime EditedAt { get; set; }
+    public DateTime? EditedAt { get; set; }
 
     [Required]
     [MaxLength(150)]

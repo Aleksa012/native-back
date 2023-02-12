@@ -16,6 +16,7 @@ builder.Services.AddDbContext<DataContext>(o => o
         .GetConnectionString(builder
             .Configuration)));
 builder.Services.AddTransient<Auth>();
+builder.Services.AddTransient<GetUserFromToken>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

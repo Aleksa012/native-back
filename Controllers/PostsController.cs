@@ -1,9 +1,7 @@
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NativeBackend.Services;
 using NativeBackendApp.Data;
 using NativeBackendApp.DTO;
 using NativeBackendApp.Models;
@@ -17,16 +15,34 @@ namespace NativeBackendApp.Controllers;
 public class PostsController : ControllerBase
 {
     private readonly DataContext _context;
+    private readonly GetUserFromToken _getUserFromToken;
     
-    public PostsController(DataContext context)
+    public PostsController(DataContext context ,GetUserFromToken getUserFromToken)
     {
         _context = context;
+        _getUserFromToken = getUserFromToken;
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<PostResponse>> GetAll()
     {
-        return Ok(_context.Posts.Include(post => post.Author).Select(post => new PostResponse(post)));
+        return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).Select(post => new PostResponse(post)));
+    }
+
+    [HttpGet]
+    [Route("user")]
+    public ActionResult<IEnumerable<PostResponse>> GetPostsByUser(Guid? id)
+    {
+        if (id != null)
+        {
+            return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).Where(post => post.Author.Id == id).Select(post => new PostResponse(post)));;
+        }
+        else
+        {
+            var user = _getUserFromToken.GetUser(HttpContext);
+            
+            return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).Where(post => post.Author.Id == user.Id).Select(post => new PostResponse(post)));;
+        }
     }
 
     [HttpPost]

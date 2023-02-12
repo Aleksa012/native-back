@@ -14,8 +14,6 @@ public class UserResponse
     public bool IsVerified { get; set; }
 
     public List<PostResponse> Posts { get; set; } = new List<PostResponse>();
-
-    public List<Comment> Comments { get; set; } = new List<Comment>();
     
     public UserResponse(User user )
     {
@@ -25,7 +23,7 @@ public class UserResponse
         IsVerified = user.IsVerified;
     }
     
-    public UserResponse(User user , IEnumerable<Post> posts)
+    public UserResponse(User user , List<Post> posts)
     {
         Id = user.Id;
         UserName = user.UserName;

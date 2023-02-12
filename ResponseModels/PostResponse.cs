@@ -15,7 +15,7 @@ public class PostResponse
     [Required]
     public string Content { get; set; }
 
-    public List<Comment> Comments { get; set; }
+    public List<CommentResponse> Comments { get; set; }
     
     public List<Guid> Likes { get; set; }
     
@@ -31,10 +31,11 @@ public class PostResponse
         CreatedAt = post.CreatedAt;
         EditedAt = post.EditedAt;
         Content = post.Content;
-        Comments = post.Comments;
+        Comments = post.Comments.Select(comment => new CommentResponse(comment)).ToList();
         Likes = post.Likes;
         Dislikes = post.Dislikes;
         IsPopular = post.IsPopular;
-        Author = post.Author.Id;
+        Author = post.Author!.Id;
     }
+
 }
