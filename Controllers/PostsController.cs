@@ -35,13 +35,13 @@ public class PostsController : ControllerBase
     {
         if (id != null)
         {
-            return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).Where(post => post.Author.Id == id).Select(post => new PostResponse(post)));;
+            return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).Where(post => post.Author!.Id == id).Select(post => new PostResponse(post)));;
         }
         else
         {
             var user = _getUserFromToken.GetUser(HttpContext);
             
-            return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).Where(post => post.Author.Id == user.Id).Select(post => new PostResponse(post)));;
+            return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).Where(post => post.Author!.Id == user.Id).Select(post => new PostResponse(post)));;
         }
     }
 

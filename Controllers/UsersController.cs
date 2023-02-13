@@ -29,7 +29,7 @@ public class UsersController: ControllerBase
     public ActionResult<IEnumerable<UserResponse>> GetAll()
     {
         return Ok(_context.Users.Select(user =>
-                new UserResponse(user , _context.Posts.Where(post => post.Author.Id == user.Id).ToList())       
+                new UserResponse(user , _context.Posts.Where(post => post.Author!.Id == user.Id).ToList())       
         ));
     }
 
