@@ -40,6 +40,9 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+var scope = app.Services.CreateScope();
+await MigrateDb.ManageDataAsync(scope.ServiceProvider);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
