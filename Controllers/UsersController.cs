@@ -104,4 +104,16 @@ public class UsersController: ControllerBase
 
         return Ok();
     }
+    
+    [HttpGet]
+    [Authorize]
+    [Route("me")]
+    public  ActionResult<UserResponse> GetMe()
+    {
+        var token = HttpContext.User;
+        
+        var user = _context.Users.Single(user => user.Id.ToString() == token.FindFirst("Id")!.Value);
+        
+        return Ok(new UserResponse(user));
+    }
 }
