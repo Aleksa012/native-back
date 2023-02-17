@@ -66,8 +66,10 @@ public class PostsController : ControllerBase
 
     [HttpPut]
     [Route("like")]
-    public async Task<ActionResult<PostResponse>> Like(Guid id , Guid userId)
+    public async Task<ActionResult<PostResponse>> Like(Guid id)
     {
+        var userId = _getUserFromToken.GetUser(HttpContext).Id;
+        
         var post = _context.Posts.Include(post => post.Author).Single(post => post.Id == id);
 
         if (post.Likes.Contains(userId))
@@ -91,8 +93,10 @@ public class PostsController : ControllerBase
     
     [HttpPut]
     [Route("dislike")]
-    public async Task<ActionResult<PostResponse>> Dislike(Guid id , Guid userId)
+    public async Task<ActionResult<PostResponse>> Dislike(Guid id)
     {
+        var userId = _getUserFromToken.GetUser(HttpContext).Id;
+
         var post = _context.Posts.Include(post => post.Author).Single(post => post.Id == id);
 
         if (post.Dislikes.Contains(userId))
@@ -122,5 +126,14 @@ public class PostsController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok();
+    }
+    
+    [HttpGet]
+    [Route("Id")]
+    public ActionResult<PostResponse> GetPostById(Guid id)
+    {
+        var post = _context.Posts.Include(post => post.Author).Include(post => post.Comments).Single(post => post.Id == id);
+        
+        return Ok(new PostResponse(post));
     }
 }
