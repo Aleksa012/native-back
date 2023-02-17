@@ -23,7 +23,7 @@ public class PostResponse
 
     public bool IsPopular { get; set; }
     
-    public Guid Author { get; set; }
+    public string Author { get; set; }
 
     public PostResponse(Post post)
     {
@@ -35,7 +35,7 @@ public class PostResponse
         Likes = post.Likes;
         Dislikes = post.Dislikes;
         IsPopular = post.IsPopular;
-        Author = post.Author!.Id;
+        Author = post.Author!.UserName;
     }
 
 }
