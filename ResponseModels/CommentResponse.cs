@@ -18,7 +18,7 @@ public class CommentResponse
     
     public List<Guid> Dislikes { get; set; } 
     
-    public Guid Author { get; set; }
+    public string Author { get; set; }
 
     public CommentResponse(Comment comment)
     {
@@ -28,6 +28,6 @@ public class CommentResponse
         Content = comment.Content;
         Likes = comment.Likes;
         Dislikes = comment.Dislikes;
-        Author = comment.Author.Id;
+        Author = comment.Author.UserName;
     }
 }
