@@ -26,7 +26,7 @@ public class PostsController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<PostResponse>> GetAll()
     {
-        return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).Select(post => new PostResponse(post)));
+        return Ok(_context.Posts.Include(post => post.Author).Include(post => post.Comments).OrderBy(post=> post.CreatedAt).Select(post => new PostResponse(post)));
     }
 
     [HttpGet]
