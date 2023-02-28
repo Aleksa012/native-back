@@ -43,11 +43,9 @@ var app = builder.Build();
 var scope = app.Services.CreateScope();
 await MigrateDb.ManageDataAsync(scope.ServiceProvider);
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
